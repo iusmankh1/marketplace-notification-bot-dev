@@ -6,6 +6,9 @@ const fs = require('fs')
 const axios = require('axios');
 const config = require('./config');
 const browse = new Automate();
+const macAddress = require('macaddress');
+const { machineIdSync } = require('node-machine-id');
+
 let mainWindow;
 
 let username = ''; // Initialize an empty username
@@ -27,11 +30,13 @@ app.on('ready', () => {
 
   ipcMain.on('login:authenticate', async (event, data) => {
     try {
+      const deviceIdentifier = await getUniqueDeviceID(); // called function to get device make address
       const response = await axios.post(
-        'https://botusers.cyclic.app/api/users/login',
+        'http://192.168.18.227:4000/api/users/login',
         {
           email: data.email,
           password: data.password,
+          deviceID: deviceIdentifier
         },
         {
           headers: {
@@ -42,6 +47,7 @@ app.on('ready', () => {
       const user = response.data.user;
       const expiryDate = new Date(user.expiryDate);
       const currentDate = new Date();
+
       if (currentDate > expiryDate) {
         event.sender.send('login:response', {
           type: 'error',
@@ -67,16 +73,21 @@ app.on('ready', () => {
         fs.closeSync(fs.openSync(config.first_name, "a"));
       }
       fs.writeFileSync(config.first_name, user.username);
-
       mainWindow.loadURL(`${config.listing_executer}`);
     } catch (error) {
       if (error.response && (error.response.status === 400 || error.response.status === 401)) {
         // Unauthorized - Incorrect Email or Password
-        console.error('Error:', error.response);
-        event.sender.send("login:response", {
-          type: "error",
-          message: `Oops! It looks like your email or password is incorrect. Need help? Click here to visit the website or contact a Customer Support representative.`
-        });
+        if (error.response.data.error) {
+          event.sender.send('login:response', {
+            type: 'error',
+            message: `Device limit reached. To report an issue, click here or contact Customer Support.`,
+          });
+        } else {
+          event.sender.send("login:response", {
+            type: "error",
+            message: `We're sorry, but our system is currently unavailable. We're working hard to fix this. To report an issue, click here or contact Customer Support.`,
+          });
+        }
       } else {
         // Other API errors
         console.error('Error Happen');
@@ -87,6 +98,36 @@ app.on('ready', () => {
       }
     }
   });
+
+  // Helper function to get unique device identifier
+  async function getUniqueDeviceID() {
+    try {
+      const mac = await getMacAddress();
+      if (mac) {
+        return mac;
+      } else {
+        // If MAC address retrieval fails, get a unique machine ID based on system properties
+        const machineID = machineIdSync({ original: true });
+        return machineID;
+      }
+    } catch (error) {
+      throw 'Failed to retrieve MAC address and machine ID';
+    }
+  }
+
+  // Helper function to get MAC address
+  function getMacAddress() {
+    return new Promise((resolve, reject) => {
+      macAddress.one((err, mac) => {
+        if (err) {
+          console.warn('Could not fetch MAC address:', err);
+          resolve(null);
+        } else {
+          resolve(mac);
+        }
+      });
+    });
+  }
 
   // Read the user's first name and store it in the 'username' variable
   const firstNameFilePath = path.join(app.getPath('userData'), 'name.txt');

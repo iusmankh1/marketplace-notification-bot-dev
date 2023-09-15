@@ -2,6 +2,8 @@ const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const locateChrome = require("locate-chrome");
 const nodemailer = require("nodemailer");
+require('dotenv').config()
+
 
 
 class Automate {
@@ -24,8 +26,8 @@ class Automate {
       port: 465,
       secure: true,
       auth: {
-        user: 'noreply@usmankh.com',
-        pass: '4+rA{nJ6,hkQRV.',
+        user: process.env.UserName,
+        pass: process.env.UserPassword,
       },
     });
     console.log("trnasporter", transporter)

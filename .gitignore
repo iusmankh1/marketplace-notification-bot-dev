@@ -1,2 +1,3 @@
+.env
 node_modules
 SendMessage-win32-x64

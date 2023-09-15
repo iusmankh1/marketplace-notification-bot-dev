@@ -85,7 +85,7 @@ app.on('ready', () => {
         } else {
           event.sender.send("login:response", {
             type: "error",
-            message: `We're sorry, but our system is currently unavailable. We're working hard to fix this. To report an issue, click here or contact Customer Support.`,
+            message: `Oops! It looks like your email or password is incorrect. Need help? Click here to visit the website or contact a Customer Support representative.`,
           });
         }
       } else {

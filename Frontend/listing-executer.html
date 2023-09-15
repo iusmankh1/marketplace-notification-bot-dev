@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>FB Marketplace Notification</title>
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this page -->
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <style>
+    td .btn {
+      margin-left: 10px;
+    }
+
+    .box {
+      padding: 15px;
+      border: 1px solid #ccc;
+      background-color: #ffffff;
+      text-align: center;
+    }
+
+    /* Optional styling for the boxes */
+    .box {
+      margin-bottom: 20px;
+    }
+
+    .log-box {
+      max-height: 200px;
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
+          <!-- Top bar Navbar -->
+          <ul class="navbar-nav">
+            <!-- Nav Item -->
+            <li class="mr-auto">
+              <a class="nav-link" style="margin-left: -30px" href="listing-executer.html">
+                <img class="img-responsive-logo" src="img/FB-market-Logo.ico" />
+              </a>
+            </li>
+          </ul>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="username"></span>
+                <img class="img-profile rounded-circle" id="img-profile"
+                  src="./img/possessed-photography-JjGXjESMxOY-unsplash.jpg">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!-- <div class="success"></div> -->
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Marketplace Notification</h1>
+          <p class="mb-4">Run the Scraping.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                Facebook Login
+              </h6>
+            </div>
+            <div class="card-body">
+              <p class="mb-4">
+                Please make sure you are enter your Facebook Account Correct
+                Credentials
+              </p>
+              <div class="row">
+                <!-- clairydecuba@armsfat.com -->
+                <div class="col-md-5 login-input">
+                  <input type="text" placeholder="Facebook Email" id="email" class="form-control" />
+                </div>
+                <!-- pass1234 -->
+                <div class="col-md-5 login-input">
+                  <input type="password" placeholder="Facebook Password" id="password" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-primary btn-block" id="login">
+                    Facebook Login
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-success alert-dismissible fade show" id="alertDisplay" role="alert">
+            <strong>success!</strong> <span id="successMessage"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="alert alert-danger" id="alertErrorDisplay" style="display: none">
+            <strong>Error!</strong> <span id="errorMessage"></span>
+            <button type="button" class="close" id="CloseError">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Notification Bot</h6>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-5">
+                    <input
+                      type="text"
+                      placeholder="Enter Link"
+                      id="link"
+                      class="form-control"
+                      value="https://www.facebook.com/marketplace/110855035610007/search?query=furniture"
+                      />
+                  </div>
+                  <div class="col-md-3">
+                    <input
+                      type="text"
+                      placeholder="Enter Email"
+                      id="mailtext"
+                      class="form-control"
+                      value="tyvowuxu@lyft.live"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="number"
+                      placeholder="Refresh (in minute)"
+                      id="refresh"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <button
+                      class="btn btn-primary btn-block mb-2"
+                      id="scrapLink"
+                    >
+                      Start Notification
+                    </button>
+                    <button class="btn btn-danger btn-block" id="stopLink">
+                      Stop
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Message Bot</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <input type="text" placeholder="Enter Link" id="linkData" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                  <input type="number" placeholder="Scroll" id="scrollDelay" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                  <input type="number" placeholder="Listing Delay" id="listingDelay" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                  <input type="number" placeholder="Operation Delay" id="operationDelay" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-primary btn-block mb-2" id="scrapData">
+                    Start Message
+                  </button>
+                  <button class="btn btn-danger btn-block" id="stopData">
+                    Stop
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <input type="text" placeholder="Message" id="message" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                  <input type="number" placeholder="No of Messages" id="numOfMessages" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Bot Logs</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="box">
+                    <h6 class="font-weight-bold text-primary">Bot Status</h6>
+                    <div id="botStatusBox" class="log-box"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="box">
+                    <h6 class="font-weight-bold text-primary">
+                      Bot Operations
+                    </h6>
+                    <div id="botOperationsBox" class="log-box"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; BXtrack 2023</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            <i class="fas fa-exclamation-triangle text-danger mr-2"></i>
+            Ready to Leave?
+          </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><i class="fas fa-info-circle text-info mr-2"></i>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-danger" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap core JavaScript-->
+  <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+  <!-- <script>window.$ = window.jQuery = require('./vendor/jquery/jquery.min.js');</script> -->
+  <script type="text/javascript" src="vendor/jquery/jquery.min.js"
+    onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/datatables-demo.js"></script>
+  <script>
+    const electron = require("electron");
+    const { ipcRenderer, remote } = electron;
+
+    var fbLoggedIn = false;
+    ipcRenderer.send('get-username');
+    ipcRenderer.on('username-reply', (event, username) => {
+      $('#username').text(username);
+    });
+
+    const botStatusBox = $("#botStatusBox");
+    const botOperationsBox = $("#botOperationsBox");
+
+    ipcRenderer.on("logMessageUpdate", (event, logMessages) => {
+      console.log("Received Log messages in frontend", logMessages);
+      logMessages.forEach((log) => {
+        // Choose the target element based on the status
+        const targetElement =
+          log.status === "operation" ? botOperationsBox : botStatusBox;
+        // Display log message in the chosen target element
+        const logMessageElement = $("<p>").text(log.message);
+        targetElement.append(logMessageElement);
+      });
+    });
+
+    $("#login").on("click", () => {
+      var username = $("#email").val();
+      var password = $("#password").val();
+      if (!password) {
+        showErrorMessage("Please enter password");
+        return;
+      }
+      fbLoggedIn = true;
+      // Check if username is a valid email
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(username)) {
+        showErrorMessage("Username must be a valid email");
+        return;
+      }
+
+      hideErrorMessage(); // Hide any previous error messages
+      ipcRenderer.send("facebook:login", {
+        username: username,
+        password: password,
+      });
+    });
+
+    // Set up a listener for input changes in the fields
+    $(
+      "#email ,#mailtext,#numOfMessages,#password, #message, #refresh , #link, #scrollDelay, #listingDelay, #operationDelay"
+    ).on("input", () => {
+      hideErrorMessage();
+    });
+
+    $("#scrapLink").on("click", async function () {
+      if (!fbLoggedIn) {
+        showErrorMessage("Please first login to Facebook");
+        return;
+      }
+
+      const link = $("#link").val();
+      const email = $("#mailtext").val();
+      const refresh = parseInt($("#refresh").val());
+      emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showErrorMessage("Email must be a valid email");
+        return;
+      }
+      if (
+        !link ||
+        !email ||
+        isNaN(refresh)
+      ) {
+        showErrorMessage("Please enter valid input values");
+        return;
+      }
+      const refreshed = refresh * 60000;
+      hideErrorMessage();
+      disableButtons();
+      ipcRenderer.send("automate:scrapLink", { link, refreshed, email, });
+    });
+
+    $("#scrapData").on("click", async function () {
+      if (!fbLoggedIn) {
+        showErrorMessage("Please first login to Facebook");
+        return;
+      }
+
+      const link = $("#linkData").val();
+      console.log("links", link);
+      const scrollDelay = parseInt($("#scrollDelay").val());
+      const listingDelay = parseInt($("#listingDelay").val());
+      const operationDelay = parseInt($("#operationDelay").val());
+      const message = $("#message").val();
+      const noOfMessage = parseInt($("#numOfMessages").val());
+
+      if (!link || !message || isNaN(scrollDelay) || isNaN(listingDelay) || isNaN(operationDelay) || isNaN(noOfMessage)) {
+        showErrorMessage("Please enter valid input values");
+        return;
+      }
+      const listingDelayInMs = listingDelay * 1000;
+      const operationDelayInMs = operationDelay * 1000;
+
+      hideErrorMessage();
+      disableButtons();
+
+      ipcRenderer.send(
+        "automate:scrapData",
+        link,
+        scrollDelay,
+        listingDelayInMs,
+        operationDelayInMs,
+        message,
+        noOfMessage
+      );
+    });
+
+    $("#stopLink").on("click", () => {
+      ipcRenderer.send("automate:stop");
+    });
+    $("#stopData").on("click", () => {
+      ipcRenderer.send("automate:stop");
+    });
+
+    // Error message functions
+    function showErrorMessage(message) {
+      const errorMessageElement = $("#errorMessage");
+      errorMessageElement.text(message);
+      $("#alertErrorDisplay").show();
+    }
+
+    function hideErrorMessage() {
+      $("#alertErrorDisplay").hide();
+    }
+
+
+    ipcRenderer.on("action:completed", (event) => {
+      console.log("action is complete");
+      enableButtons(event);
+    });
+
+    ipcRenderer.on("action:stopped", (event) => {
+      console.log("action is stopped");
+      enableButtons(event);
+    });
+
+    ipcRenderer.on("scrapeLinkCompleted", (event) => {
+      console.log("link scraping complete");
+      enableButtons(event);
+    });
+
+    ipcRenderer.on("scrapeDataCompleted", (event) => {
+      console.log("data scraping complete");
+      enableButtons(event);
+    });
+    ipcRenderer.on("browserStopped", (event) => {
+      console.log("data scraping Stop");
+      enableButtons(event);
+    });
+    function disableButtons() {
+      $("#scrapLink, #scrapData").prop("disabled", true);
+      $("#stopLink , #stopData").prop("disabled", false);
+    }
+    function enableButtons(event) {
+      $("#scrapLink, #scrapData").prop("disabled", false);
+      $("#stopLink , #stopData").prop("disabled", true);
+      console.log("Buttons enabled");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      $("#alertDisplay")
+        .fadeTo(2000, 500)
+        .slideUp(500, function () {
+          $("#alertDisplay").slideUp(500);
+        });
+      // Check if the success message has already been displayed
+      const successDisplayed = sessionStorage.getItem("successDisplayed");
+
+      // Retrieve the success message from the query parameter
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      let successMessage = urlParams.get("success");
+      console.log(successMessage);
+
+      // Display the success message and alert only if there is a success message
+      // and it hasn't been displayed before
+      if (successMessage && successDisplayed) {
+        const successElement = document.getElementById("successMessage");
+        const alertDisplay = document.getElementById("alertDisplay");
+        alertDisplay.style.display = "block";
+        successElement.innerText = successMessage;
+
+        // Show the alert
+        const alertElement = document.querySelector(".alert");
+        alertElement.style.display = "block";
+
+        // Add a listener to close the alert
+        const closeButton = alertElement.querySelector(".close");
+        closeButton.addEventListener("click", function () {
+          alertElement.style.display = "none";
+        });
+
+        // Empty or delete the success message parameter
+        urlParams.delete("success");
+        successMessage = null;
+        const newUrl = window.location.pathname + urlParams.toString();
+        window.history.replaceState({}, "", newUrl);
+
+        // Store the information that the success message has been displayed
+      } else {
+        sessionStorage.setItem("successDisplayed", "false");
+        const alertDisplay = document.getElementById("alertDisplay");
+        alertDisplay.style.display = "none";
+      }
+      const alertErrorDisplay = document.getElementById("alertErrorDisplay");
+      alertErrorDisplay.style.display = "none";
+    });
+  </script>
+</body>
+
+</html>

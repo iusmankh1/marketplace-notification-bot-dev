@@ -22,6 +22,8 @@
     "json2csv": "^6.0.0-alpha.2",
     "knex": "^0.21.21",
     "locate-chrome": "^0.1.1",
+    "macaddress": "^0.5.3",
+    "node-machine-id": "^1.1.12",
     "nodemailer": "^6.9.4",
     "nodemon": "^2.0.22",
     "playwright-extra": "^4.3.5",

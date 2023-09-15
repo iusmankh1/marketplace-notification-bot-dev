@@ -11,7 +11,7 @@ This is an Electron app for scraping data from Facebook Marketplace.
 
 
 ## Navigate to the project directory:
-cd FB-Marketplace-Scraper-Bot
+cd FB-Marketplace-Notification-Bot
 
 ## Install the required dependencies:
 npm install

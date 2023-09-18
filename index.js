@@ -32,7 +32,7 @@ app.on('ready', () => {
     try {
       const deviceIdentifier = await getUniqueDeviceID(); // called function to get device make address
       const response = await axios.post(
-        'http://192.168.18.227:4000/api/users/login',
+        'https://botswithbrain.cyclic.cloud/api/users/login',
         {
           email: data.email,
           password: data.password,
@@ -77,17 +77,11 @@ app.on('ready', () => {
     } catch (error) {
       if (error.response && (error.response.status === 400 || error.response.status === 401)) {
         // Unauthorized - Incorrect Email or Password
-        if (error.response.data.error) {
-          event.sender.send('login:response', {
-            type: 'error',
-            message: `Device limit reached. To report an issue, click here or contact Customer Support.`,
-          });
-        } else {
-          event.sender.send("login:response", {
-            type: "error",
-            message: `Oops! It looks like your email or password is incorrect. Need help? Click here to visit the website or contact a Customer Support representative.`,
-          });
-        }
+        let ERROR =  error.response.data.error
+        event.sender.send('login:response', {
+          type: 'error',
+          message: `Oops! It looks like  ${ERROR}, click here or contact Customer Support.`,
+        });
       } else {
         // Other API errors
         console.error('Error Happen');

@@ -8,6 +8,6 @@ module.exports = {
     listing_executer: `file://${__dirname}/Frontend/listing-executer.html`,
     token_path: path.join(app.getPath('userData'), "token.txt"),
     first_name: path.join(app.getPath('userData'), "name.txt"),
-    sampleProductId: "FBMP-RB1",
+    sampleProductId: "FB-NB",
     specialId: "BXTEAEM0013",
 }

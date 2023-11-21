@@ -1,13 +1,13 @@
 {
-  "name": "fb-marketplace-scraper-bot",
+  "name": "fb-mp-notification-bot",
   "version": "1.0.0",
-  "description": "Facebook-Marketplace-Scraper-Bot",
+  "description": "FB-MP-Notification-Bot",
   "icon": "./icon.png",
   "main": "index.js",
   "scripts": {
     "start": "electron .",
     "watch": "nodemon --exec electron .",
-    "build": "electron-packager . --protocol=fbmpbot --protocol-name='Fb-Marketplace SendMessage Bot' --icon=./icon.png --asar"
+    "build": "electron-packager . --protocol=fbmpbot --protocol-name='FB-MP Notification Bot' --icon=./icon.png --asar"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +24,7 @@
     "locate-chrome": "^0.1.1",
     "macaddress": "^0.5.3",
     "node-machine-id": "^1.1.12",
-    "nodemailer": "^6.9.4",
+    "nodemailer": "^6.9.7",
     "nodemon": "^2.0.22",
     "playwright-extra": "^4.3.5",
     "puppeteer": "^18.1.0",

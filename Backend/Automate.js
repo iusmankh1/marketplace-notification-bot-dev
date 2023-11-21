@@ -20,20 +20,22 @@ class Automate {
   async init() {
     // Initialization code if needed
   }
+
+
   async sendMail(email, subject, text, event) {
+    console.log("function calling ");
     const transporter = nodemailer.createTransport({
-      host: 'smtp.hostinger.com',
-      port: 465,
-      secure: true,
+      service: 'gmail',
       auth: {
-        user: process.env.UserName,
-        pass: process.env.UserPassword,
+        user: "botwithbrain8@gmail.com",
+        pass: "mbii gicb noka zevm",
       },
     });
-    console.log("trnasporter", transporter)
+    // console.log("trnasporter", transporter)
+
 
     const mailOptions = {
-      from: 'noreply@usmankh.com',
+      from: "botwithbrain8@gmail.com",
       to: email,
       subject: subject,
       text: text,
@@ -42,8 +44,10 @@ class Automate {
     try {
       const info = await transporter.sendMail(mailOptions);
       console.log('Mail Sent', info.response);
+      return ('New Scraped Links sent via email Successfully')
     } catch (error) {
       console.error('Error while sending email', error);
+      return ('Error while sending email')
     }
   }
 
@@ -57,7 +61,7 @@ class Automate {
     this.browser = await puppeteer.launch({
       executablePath: chromePath,
       headless: false,
-      ignoreDefaultArgs: ['--enable-automation'],
+      // ignoreDefaultArgs: ['--enable-automation'],
       args: [
         '--start-maximized',
         '--disable-infobars',
@@ -65,7 +69,8 @@ class Automate {
         '--password-store=basic',
       ],
     });
-    this.page = await this.browser.newPage();
+    const [page] = await this.browser.pages();
+    this.page = page
 
     await this.page.goto("https://facebook.com/");
     try {
@@ -123,8 +128,8 @@ class Automate {
           // Send email with new scraped links
           const emailSubject = "New Scraped Links";
           const emailText = `Here are the new scraped links:\n${extractLink.map(linkObj => linkObj.Link).join("\n")}`;
-          // this.sendMail(email, emailSubject, emailText);
-          this.onLogMessage('New Links sent via email Successfully', 'status');
+          const result = await this.sendMail(email, emailSubject, emailText);
+          this.onLogMessage(`${result}`, 'status');
           this.sendLogsToUI(event);
         } else {
           this.onLogMessage('No new links found', 'status');
@@ -186,7 +191,7 @@ class Automate {
           } else {
             console.error('Message input element not found');
           }
-          const sendButtonXPath = '//*[@id="facebook"]//div[4]//div[2]/div/div/div[2]';
+          const sendButtonXPath = '//div[@aria-label="Send Message"]';
           const [sendButton] = await this.page.$x(sendButtonXPath);
           if (sendButton) {
             await sendButton.click(); // Click the send button

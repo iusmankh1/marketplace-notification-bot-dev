@@ -8,7 +8,7 @@ const config = require('./config');
 const browse = new Automate();
 const macAddress = require('macaddress');
 const { machineIdSync } = require('node-machine-id');
-
+const https = require("https")
 let mainWindow;
 
 let username = ''; // Initialize an empty username
@@ -30,45 +30,26 @@ app.on('ready', () => {
 
   ipcMain.on('login:authenticate', async (event, data) => {
     try {
+      const productIds = config.sampleProductId;
       const deviceIdentifier = await getUniqueDeviceID(); // called function to get device make address
       const response = await axios.post(
-        'https://botswithbrain.cyclic.cloud/api/users/login',
+        'https://botswithbrains-api-v2.vercel.app/api/users/login',
         {
           email: data.email,
           password: data.password,
-          deviceID: deviceIdentifier
+          deviceID: deviceIdentifier,
+          productIds:productIds
         },
         {
           headers: {
             'Content-Type': 'application/json',
           },
+          httpsAgent: new https.Agent({ rejectUnauthorized: false }), // Bypass certificate validation
         }
       );
-      const user = response.data.user;
-      const expiryDate = new Date(user.expiryDate);
-      const currentDate = new Date();
 
-      if (currentDate > expiryDate) {
-        event.sender.send('login:response', {
-          type: 'error',
-          message: `It appears your software license has expired. To continue using our services, click here to repurchase or contact our System Administrator for assistance.`,
-        });
-        return;
-      }
-      if (user.Product_ID !== config.sampleProductId && user.Product_ID !== config.specialId) {
-        event.sender.send('login:response', {
-          type: 'error',
-          message: `Unfortunately, you're not eligible for this product. If you believe this is an error, you can report the issue here or reach out to Customer Support.`,
-        });
-        return;
-      }
-      if (!user.status) {
-        event.sender.send('login:response', {
-          type: 'error',
-          message: "Your account has been blocked by the system admin. To resolve this, please contact Customer Support or to visit click here."
-        });
-        return;
-      }
+      const user = response.data.user;
+
       if (!fs.existsSync(config.first_name)) {
         fs.closeSync(fs.openSync(config.first_name, "a"));
       }
@@ -78,13 +59,14 @@ app.on('ready', () => {
       if (error.response && (error.response.status === 400 || error.response.status === 401)) {
         // Unauthorized - Incorrect Email or Password
         let ERROR =  error.response.data.error
+        console.log("Error",ERROR);
         event.sender.send('login:response', {
           type: 'error',
           message: `Oops! It looks like  ${ERROR}, click here or contact Customer Support.`,
         });
       } else {
         // Other API errors
-        console.error('Error Happen');
+        console.error('Error Happen',error);
         event.sender.send('login:response', {
           type: 'error',
           message: `We're sorry, but our system is currently unavailable. We're working hard to fix this. To report an issue, click here or contact Customer Support.`,

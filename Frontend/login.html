@@ -40,7 +40,7 @@
                   <div class="text-center">
                     <img class="img-responsive pull-left flip logo hidden-xs animated fadeIn" src="img/FB-market-Logo.ico"
                       alt="Logo Icon">
-                    <h1 class="h4 text-gray-900 mb-4">Group Notification Bot Login</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Notification Bot Login</h1>
                   </div>
                   <form class="user" action="#">
                     <div class="form-group">
@@ -56,6 +56,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
+                    <span id="link" style="color: blue; cursor: pointer;">Click here to see our other bots</span>
                     <!-- <a class="small" href="register.html">Create an Account!</a> -->
                   </div>
                 </div>
@@ -105,12 +106,22 @@
     $(".spinner-grow").remove();
     $('#password').val('');
 
+  
     // Add a click event listener to the error link
     $('#errorLink').click(() => {
       // Open the link in a new browser window
-      shell.openExternal('https://bxtrack.com/contact-us');
+      shell.openExternal('https://botswithbrains.com');
     });
+    
+
   }
+
+  $('#link').click(() => {
+      // Open the link in a new browser window
+      console.log("clicking");
+      shell.openExternal('https://botswithbrains.com');
+    });
+    
 
   // Function to clear error messages on input focus
   function clearErrorOnFocus() {

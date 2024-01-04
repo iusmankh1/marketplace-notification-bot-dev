@@ -8,6 +8,6 @@ module.exports = {
     listing_executer: `file://${__dirname}/Frontend/listing-executer.html`,
     token_path: path.join(app.getPath('userData'), "token.txt"),
     first_name: path.join(app.getPath('userData'), "name.txt"),
-    sampleProductId: "659260e2d68befe6024e4f89",
+    Product_ID: "65928df71dd725ee5d6501de", // FBG email notification bot ProductID
     specialId: "BXTEAEM0013",
 }   

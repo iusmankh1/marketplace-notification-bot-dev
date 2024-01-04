@@ -30,7 +30,7 @@ app.on('ready', () => {
 
   ipcMain.on('login:authenticate', async (event, data) => {
     try {
-      const productIds = config.sampleProductId;
+      const productIds = config.Product_ID;
       const deviceIdentifier = await getUniqueDeviceID(); // called function to get device make address
       const response = await axios.post(
         'https://botswithbrains-api-v2.vercel.app/api/users/login',

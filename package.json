@@ -7,7 +7,7 @@
   "scripts": {
     "start": "electron .",
     "watch": "nodemon --exec electron .",
-    "build": "electron-packager . --protocol=fbmpbot --protocol-name='FBG Notification Bot' --icon=./icon.png --asar"
+    "build": "electron-packager . --protocol=fbmpbot --protocol-name='FB Notification Bot' --icon=./icon.png --asar"
   },
   "keywords": [],
   "author": "",
